@@ -10,8 +10,6 @@
 - Browse upcoming car events
 - Purchase event tickets with live price calculation
 - Seamless Pesapal iframe payment flow
-- Automatic email delivery of ticket (PDF with QR code)
-- Downloadable ticket upon successful payment
 
 ### 🛠️ Admin Panel
 - Secure admin login/logout using JWT in HTTP-only cookies
@@ -19,8 +17,7 @@
 - View statistics: total events, revenue, tickets sold
 - Filter/search events
 - Export events and tickets as CSV
-- QR code check-in for ticket verification
-- Fully responsive dark UI with neon-glow style
+- Fully responsive dark UI with royal blue style
 
 ---
 
@@ -47,18 +44,20 @@ npm install
 ⚙️ Environment Configuration
 Create a .env file in the root and configure:
 PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
+DB_HOST=localhost //Change to your database host
+DB_USER=root //Change to your database user
+DB_PASSWORD=yourpassword //Input your database password
 DB_NAME=revup
 JWT_SECRET=revupsecret
-PESAPAL_CONSUMER_KEY=your_key
-PESAPAL_CONSUMER_SECRET=your_secret
+PESAPAL_CONSUMER_KEY=your_key //Input your pesapal Key
+PESAPAL_CONSUMER_SECRET=your_secret //Input your pesapal secret
 PESAPAL_CALLBACK_URL=http://localhost:3000/api/pesapal/callback
 
 
 🗃️ MySQL Tables
-In your Database add the following tables.
+Create a database called revup
+use revup
+In revup add the following tables.
 -- Admin table
 CREATE TABLE admin (
   id INT AUTO_INCREMENT PRIMARY KEY,
