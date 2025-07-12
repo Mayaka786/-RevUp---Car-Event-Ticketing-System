@@ -111,9 +111,6 @@ Admin Panel → http://localhost:3000/admin-login.html
 Frontend User Panel → http://localhost:3000
 
 📦 Project Structure
-pgsql
-Copy
-Edit
 📁 public/
 ├── index.html
 ├── admin-login.html
