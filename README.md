@@ -107,8 +107,8 @@ CREATE TABLE pesapal_interim_payment (
 npm run dev
 
 Visit:
-Frontend → http://localhost:3000
 Admin Panel → http://localhost:3000/admin-login.html
+Frontend User Panel → http://localhost:3000
 
 📦 Project Structure
 pgsql
