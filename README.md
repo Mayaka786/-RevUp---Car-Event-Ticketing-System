@@ -104,7 +104,6 @@ CREATE TABLE pesapal_interim_payment (
 
 
  Running the App
-Navigate to revup and backend
 npm run dev
 
 Visit:
