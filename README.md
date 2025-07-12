@@ -6,11 +6,6 @@
 
 ## 🔧 Features
 
-### 🎫 Client Side
-- Browse upcoming car events
-- Purchase event tickets with live price calculation
-- Seamless Pesapal iframe payment flow
-
 ### 🛠️ Admin Panel
 - Secure admin login/logout using JWT in HTTP-only cookies
 - Create, update, delete car events via dashboard
@@ -18,6 +13,11 @@
 - Filter/search events
 - Export events and tickets as CSV
 - Fully responsive dark UI with royal blue style
+
+### 🎫 Client Side
+- Browse upcoming car events
+- Purchase event tickets with live price calculation
+- Seamless Pesapal iframe payment flow
 
 ---
 
@@ -106,8 +106,10 @@ CREATE TABLE pesapal_interim_payment (
 npm run dev
 
 Visit:
-Admin Panel → http://localhost:3000/admin-login.html
-Frontend User Panel → http://localhost:3000
+a. Admin Panel → http://localhost:3000/admin-login.html
+-Create an event
+b. Frontend User Panel → http://localhost:3000
+-Choose one of the created events and proceed to paying for the ticket.
 
 📦 Project Structure
 📁 public/
