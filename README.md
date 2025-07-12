@@ -58,6 +58,7 @@ PESAPAL_CALLBACK_URL=http://localhost:3000/api/pesapal/callback
 
 
 🗃️ MySQL Tables
+In your Database add the following tables.
 -- Admin table
 CREATE TABLE admin (
   id INT AUTO_INCREMENT PRIMARY KEY,
