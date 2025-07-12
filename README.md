@@ -43,3 +43,108 @@
 git clone https://github.com/Mayaka786/-RevUp---Car-Event-Ticketing-System.git
 cd RevUp---Car-Event-Ticketing-System
 npm install
+
+⚙️ Environment Configuration
+Create a .env file in the root and configure:
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=yourpassword
+DB_NAME=revup
+JWT_SECRET=revupsecret
+PESAPAL_CONSUMER_KEY=your_key
+PESAPAL_CONSUMER_SECRET=your_secret
+PESAPAL_CALLBACK_URL=http://localhost:3000/api/pesapal/callback
+
+
+🗃️ MySQL Tables
+-- Admin table
+CREATE TABLE admin (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  passwordHash TEXT
+);
+
+-- Event table
+CREATE TABLE event (
+  eventId INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100),
+  category VARCHAR(50),
+  description TEXT,
+  eventDate DATETIME,
+  location VARCHAR(100),
+  price DECIMAL(10,2)
+);
+
+-- Ticket table
+CREATE TABLE ticket (
+  ticketId INT AUTO_INCREMENT PRIMARY KEY,
+  eventId INT,
+  customerName VARCHAR(100),
+  phoneNumber VARCHAR(20),
+  email VARCHAR(100),
+  quantity INT,
+  totalAmount DECIMAL(10,2),
+  paymentStatus VARCHAR(20),
+  isCheckedIn BOOLEAN DEFAULT FALSE,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Pesapal Interim table
+CREATE TABLE pesapal_interim_payment (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ticketId INT,
+  orderTrackingId VARCHAR(255),
+  merchantReference VARCHAR(255),
+  iframeSrc TEXT,
+  status VARCHAR(50)
+);
+
+
+ Running the App
+npm run dev
+
+Visit:
+Frontend → http://localhost:3000
+Admin Panel → http://localhost:3000/admin-login.html
+
+📦 Project Structure
+pgsql
+Copy
+Edit
+📁 public/
+├── index.html
+├── admin-login.html
+├── admin-dashboard.html
+├── main.js
+├── admin-dashboard.js
+├── styles.css
+├── admin-dashboard.css
+├── hero.mp4
+├── car images, logos, assets
+
+📁 routes/
+├── events.js
+├── admin.js
+├── tickets.js
+├── pesapal.js
+├── admin-export.js
+
+📁 utils/
+├── pesapal.js
+├── mailer.js
+
+.env
+server.js
+
+📬 Contact
+For more information or collaboration:
+
+Developer: Engineer Ian Mayaka
+
+Email: angwenyimayaka@gmail.com
+
+📄 License
+This project is for educational and demonstration purposes. Commercial usage requires explicit permission.
+
