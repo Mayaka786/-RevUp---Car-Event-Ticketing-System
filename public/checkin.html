@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QR Check-In | RevUp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #00ffcc;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 1rem;
+    }
+    video {
+      width: 100%;
+      max-width: 500px;
+      margin: 1rem auto;
+      border: 2px solid #00ffcc;
+      border-radius: 10px;
+    }
+    .result-box {
+      margin-top: 1.5rem;
+      background: #111;
+      border: 1px solid #00ffcc;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .result-box.success {
+      border-color: lime;
+    }
+    .result-box.failed {
+      border-color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>RevUp QR Ticket Check-In</h1>
+  <p>Scan the ticket QR code below</p>
+
+  <video id="preview"></video>
+  <div id="result" class="result-box">Waiting for scan...</div>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script>
+    const resultBox = document.getElementById('result');
+    const scanner = new Html5Qrcode("preview");
+
+    function markCheckedIn(ticketId) {
+      fetch(`/api/tickets/checkin/${ticketId}`, {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            resultBox.innerHTML = `✅ ${data.message}`;
+            resultBox.className = 'result-box success';
+          } else {
+            resultBox.innerHTML = `❌ ${data.message}`;
+            resultBox.className = 'result-box failed';
+          }
+        })
+        .catch(() => {
+          resultBox.innerHTML = '❌ Network error.';
+          resultBox.className = 'result-box failed';
+        });
+    }
+
+    scanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 250 },
+      (decodedText) => {
+        if (decodedText.includes('ticket/')) {
+          const ticketId = decodedText.split('ticket/')[1];
+          scanner.stop().then(() => {
+            markCheckedIn(ticketId);
+            setTimeout(() => location.reload(), 5000);
+          });
+        }
+      },
+      (errorMessage) => {}
+    );
+  </script>
+</body>
+</html>

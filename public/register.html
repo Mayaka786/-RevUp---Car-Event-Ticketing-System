@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RevUp Admin Registration</title>
+  <link rel="stylesheet" href="admin-style.css" />
+</head>
+<body>
+  <div class="carousel"></div>
+
+  <div class="admin-container">
+    <h1>🔐 Admin Registration</h1>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+      <p class="message" id="regMessage"></p>
+    </form>
+    <p style="margin-top: 10px;">Already have an account? <a href="admin-login.html">Login</a></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const regMessage = document.getElementById('regMessage');
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const name = form.name.value;
+      const email = form.email.value;
+      const password = form.password.value;
+
+      try {
+        const res = await fetch('/api/admin/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          regMessage.style.color = 'lime';
+          regMessage.textContent = '✅ Registration successful! Redirecting...';
+          setTimeout(() => {
+            window.location.href = 'admin-login.html';
+          }, 2000);
+        } else {
+          regMessage.style.color = 'tomato';
+          regMessage.textContent = '⚠️ ' + data.error;
+        }
+      } catch (err) {
+        regMessage.style.color = 'red';
+        regMessage.textContent = 'Server error. Try again.';
+      }
+    };
+  </script>
+</body>
+</html>

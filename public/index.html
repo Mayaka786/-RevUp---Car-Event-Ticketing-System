@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RevUp Car Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .revup-logo {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #00bfff;
+      text-align: center;
+      margin: 2rem 0 1.5rem;
+      font-family: 'Segoe UI', sans-serif;
+      text-shadow: 0 0 10px #00bfff;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-family: 'Segoe UI', sans-serif;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background-color: #25D366;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #1ebc58;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hero Video -->
+  <video id="heroVideo" autoplay muted loop playsinline>
+    <source src="hero.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Page Overlay -->
+  <div class="overlay">
+    <div class="container">
+      <div class="revup-logo">RevUp</div>
+
+      <header style="text-align: center; margin-bottom: 2rem">
+        <h1 class="neon-title">Available Car Events</h1>
+        <p class="hero-tagline">Choose your ride. Claim your spot.</p>
+      </header>
+
+      <main class="event-container" id="eventContainer"></main>
+    </div>
+  </div>
+
+  <!-- Ticket Modal -->
+  <div class="modal hidden" id="modal">
+    <div class="modal-content">
+      <h2>Buy Ticket</h2>
+      <form id="ticketForm">
+        <input type="text" id="customerName" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Email (for ticket delivery)" required />
+        <input type="tel" id="phoneNumber" placeholder="Phone Number" required />
+        <div class="quantity-wrapper">
+          <button type="button" id="decrement">−</button>
+          <input type="number" id="quantity" min="1" value="1" required />
+          <button type="button" id="increment">+</button>
+        </div>
+        <div id="priceInfo" style="color: #00bfff; font-weight: bold; margin-bottom: 1rem">
+          Total: KES 0.00
+        </div>
+        <button type="submit" id="payButton">Proceed to Pay</button>
+        <button type="button" id="cancelModal">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Iframe Modal -->
+  <div class="modal hidden" id="paymentModal">
+    <div class="modal-content iframe-wrapper">
+      <h2>Complete Payment</h2>
+      <iframe id="pesapalIframe" src="" frameborder="0" width="100%" height="400"></iframe>
+      <button id="cancelPayment">Cancel & Go Back</button>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader-overlay hidden" id="loaderOverlay">
+    <div class="loader"></div>
+    <p id="loaderText">Processing payment...</p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Need help? Reach us at
+    <a href="mailto:support@revup.com">support@revup.com</a><br />
+    Call: <a href="tel:+254712345678">+254 712 345 678</a><br />
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

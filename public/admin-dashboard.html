@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RevUp Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>🚗 RevUp Admin Panel</h1>
+
+    <div class="export-buttons">
+  <button onclick="exportEvents()">📤 Export Events</button>
+  <button onclick="exportTickets()">📤 Export Tickets</button>
+</div>
+
+
+    <!-- Stat Cards -->
+    <div class="stats">
+      <div class="card"><h3>Total Events</h3><p id="totalEvents">0</p></div>
+      <div class="card"><h3>Tickets Sold</h3><p id="ticketsSold">0</p></div>
+      <div class="card"><h3>Total Revenue</h3><p id="totalRevenue">KES 0</p></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Search event by title" />
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Track">Track</option>
+        <option value="Drift">Drift</option>
+        <option value="Exhibition">Exhibition</option>
+      </select>
+    </div>
+
+    <!-- Add Event Button -->
+    <button class="new-event-btn" onclick="showModal()">➕ Create New Event</button>
+
+    <!-- Events Table -->
+    <div class="table-section">
+      <table id="eventsTable">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loaded dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Logout Button -->
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- 📅 Event Modal -->
+  <div class="modal hidden" id="eventModal">
+    <div class="modal-content">
+      <h2>Create / Edit Car Event</h2>
+      <form id="eventForm">
+        <input type="hidden" id="eventId" />
+
+        <label for="title">Title</label>
+        <input type="text" id="title" required placeholder="e.g. WRX Turbo Showdown" />
+
+        <label for="category">Category</label>
+        <input type="text" id="category" required placeholder="e.g. Drift / Track" />
+
+        <label for="location">Location</label>
+        <input type="text" id="location" required placeholder="e.g. KICC Grounds" />
+
+        <label for="eventDate">Date & Time</label>
+        <input type="datetime-local" id="eventDate" required />
+
+        <label for="price">Price (KES)</label>
+        <input type="number" id="price" required placeholder="e.g. 1500" />
+
+        <label for="description">Description</label>
+        <textarea id="description" required placeholder="Describe the event..."></textarea>
+
+        <div class="modal-actions">
+          <button type="submit">✅ Save</button>
+          <button type="button" onclick="hideModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin-dashboard.js"></script>
+</body>
+</html>

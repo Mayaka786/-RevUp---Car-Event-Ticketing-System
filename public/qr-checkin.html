@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RevUp QR Check-In</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body {
+      background: #111;
+      color: #0f0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    #reader {
+      width: 300px;
+      margin: 40px auto;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #00bfff;
+    }
+  </style>
+</head>
+<body>
+  <h1>📷 RevUp Ticket Scanner</h1>
+  <div id="reader"></div>
+  <p class="result" id="scanResult">Waiting for QR scan...</p>
+
+  <script>
+    function onScanSuccess(qrCodeMessage) {
+      const idMatch = qrCodeMessage.match(/ticket\/(\d+)|ticketId=(\d+)/);
+      const ticketId = idMatch ? (idMatch[1] || idMatch[2]) : null;
+
+      if (!ticketId) {
+        document.getElementById('scanResult').textContent = '❌ Invalid QR Code';
+        return;
+      }
+
+      fetch(`/api/tickets/checkin/${ticketId}`, {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('scanResult').textContent = data.success
+            ? '✅ Ticket checked in successfully!'
+            : '❌ ' + data.message;
+        })
+        .catch(() => {
+          document.getElementById('scanResult').textContent = '❌ Check-in failed';
+        });
+    }
+
+    new Html5QrcodeScanner("reader", {
+      fps: 10, qrbox: 250
+    }).render(onScanSuccess);
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your RevUp Ticket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ticket-container">
+    <h1>✅ Ticket Confirmed</h1>
+    <p id="ticketMessage">Fetching your ticket...</p>
+    <div id="ticketDetails"></div>
+    <a id="downloadLink" style="display:none;" target="_blank">🎟️ Download Ticket PDF</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const ticketId = params.get('ticketId');
+    const status = params.get('status');
+
+    if (status === 'success' && ticketId) {
+      fetch(`/api/tickets/${ticketId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            const t = data.ticket;
+            document.getElementById('ticketMessage').innerText = 'Your ticket is ready! ✅';
+
+            document.getElementById('ticketDetails').innerHTML = `
+              <p><strong>Event:</strong> ${t.eventTitle}</p>
+              <p><strong>Date:</strong> ${new Date(t.showTime).toLocaleString()}</p>
+              <p><strong>Customer:</strong> ${t.customerName}</p>
+              <p><strong>Email:</strong> ${t.email || 'N/A'}</p>
+              <p><strong>Phone:</strong> ${t.phoneNumber}</p>
+              <p><strong>Quantity:</strong> ${t.quantity}</p>
+              <p><strong>Total Paid:</strong> KES ${t.totalAmount}</p>
+              <p><strong>Status:</strong> ${t.paymentStatus}</p>
+              <p><strong>Used:</strong> ${t.isCheckedIn ? '✅ Checked In' : '❌ Not Used'}</p>
+              <p><strong>Receipt:</strong> ${t.receiptNumber || 'N/A'}</p>
+              <img src="${t.qrCode}" alt="QR Code" style="margin-top:1rem;" />
+            `;
+
+            const link = document.getElementById('downloadLink');
+            link.href = `/api/tickets/download/${ticketId}`;
+            link.style.display = 'inline-block';
+            link.click(); // Auto-download the PDF
+          } else {
+            document.getElementById('ticketMessage').innerText = '❌ Ticket not found.';
+          }
+        })
+        .catch(() => {
+          document.getElementById('ticketMessage').innerText = '❌ Failed to load ticket.';
+        });
+    } else {
+      document.getElementById('ticketMessage').innerText = '⚠️ Invalid ticket status.';
+    }
+  </script>
+</body>
+</html>

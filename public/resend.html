@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resend Ticket | RevUp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 3rem;
+    }
+    h1 {
+      color: #0ff;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 220px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0ff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📩 Resend Your Ticket</h1>
+  <p>Enter the email you used and your ticket ID to get your ticket again.</p>
+  <input type="email" id="email" placeholder="Email used" required /><br />
+  <input type="number" id="ticketId" placeholder="Ticket ID" required /><br />
+  <button onclick="resend()">Resend Ticket</button>
+  <p id="status"></p>
+
+  <script>
+    async function resend() {
+      const email = document.getElementById('email').value;
+      const ticketId = document.getElementById('ticketId').value;
+      const status = document.getElementById('status');
+
+      status.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/tickets/resend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, ticketId })
+        });
+
+        const data = await res.json();
+        status.textContent = data.success
+          ? '✅ Ticket sent! Check your email.'
+          : '❌ ' + data.error;
+      } catch (err) {
+        status.textContent = '❌ Network error.';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+/* Fullscreen Carousel */
+.carousel {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: carFade 24s infinite ease-in-out;
+}
+
+@keyframes carFade {
+  0%, 33%   { background-image: url('car2.png'); }
+  34%, 66%  { background-image: url('car3.png'); }
+  67%, 100% { background-image: url('car4.png'); }
+}
+
+/* Glassmorphism Form Container */
+.admin-container {
+  max-width: 400px;
+  margin: 10vh auto;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  color: #fff;
+  text-align: center;
+}
+
+.admin-container h1 {
+  margin-bottom: 1.5rem;
+  color: #00bfff;
+  font-weight: 700;
+}
+
+.admin-container input,
+.admin-container button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.admin-container input {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.admin-container button {
+  background: #00bfff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-container button:hover {
+  background: #00d9d9;
+}
+
+.message {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .admin-container {
+    margin: 5vh 20px;
+    padding: 20px;
+  }
+}
